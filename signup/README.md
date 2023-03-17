@@ -3,7 +3,7 @@
 A new Flutter project.
 
 ## Screen Image
-image.png
+![Alt text](image.jpg)
 
 ## Getting Started
 
