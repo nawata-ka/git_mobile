@@ -2,9 +2,6 @@
 
 A new Flutter project.
 
-## Screen Image
-![Alt text](image.jpg)
-
 ## Getting Started
 
 This project is a starting point for a Flutter application.
