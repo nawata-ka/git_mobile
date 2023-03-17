@@ -83,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             const Center(
               child: Text(
-                'Sign Up',
+                'Sign up',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 40),
               ),
             ),
@@ -109,24 +109,24 @@ class _MyHomePageState extends State<MyHomePage> {
               height: 2,
             ),
             TextFormField(
-                controller: emailController,
-                decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                ),
-                validator:(value) {
-                  final bool isValid = EmailValidator.validate(value!);
-                  if(value!.isEmpty){
-                    return "Please enter a valid Email";
-                  }
-                  else if(!isValid)
-                  {
-                    return "Please enter a valid Email format";
-                  }
-                  else{
-                    return null;
-                  }
-                },
+              controller: emailController,
+              decoration: const InputDecoration(
+              border: OutlineInputBorder(),
               ),
+              validator:(value) {
+                final bool isValid = EmailValidator.validate(value!);
+                if(value!.isEmpty){
+                  return "Please enter a valid Email";
+                }
+                else if(!isValid)
+                {
+                  return "Please enter a valid Email format";
+                }
+                else{
+                  return null;
+                }
+              },
+            ),
             
             const SizedBox(
               height: 20,
@@ -139,22 +139,23 @@ class _MyHomePageState extends State<MyHomePage> {
               height: 2,
             ),
             TextFormField(
-                controller: passwordController,
-                decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                ),
-                validator:(value) {
-                  if(value!.isEmpty){
-                    return "Please enter a valid Password";
-                  }
-                  else if(value.length < 6){
-                    return "Password must be at least 6 characters long";
-                  }
-                  else{
-                    return null;
-                  }
-                },
-              ), 
+              obscureText: true,
+              controller: passwordController,
+              decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              ),
+              validator:(value) {
+                if(value!.isEmpty){
+                  return "Please enter a valid Password";
+                }
+                else if(value.length < 6){
+                  return "Password must be at least 6 characters long";
+                }
+                else{
+                  return null;
+                }
+              },
+            ), 
               
             const SizedBox(
               height: 20,
@@ -167,48 +168,49 @@ class _MyHomePageState extends State<MyHomePage> {
               height: 2,
             ),
             TextFormField(
-                controller: confirmpasswordController,
-                decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                ),
-                validator:(value) {
-                  if( value!.isEmpty){
-                    return "Please enter a valid Confirm password";
-                  }
-                  else if(value != passwordController.text){
-                    return "Not match password";
-                  }
-                  else{
-                    return null;
-                  }
-                },
-              ), 
+              obscureText: true,
+              controller: confirmpasswordController,
+              decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              ),
+              validator:(value) {
+                if( value!.isEmpty){
+                  return "Please enter a valid Confirm password";
+                }
+                else if(value != passwordController.text){
+                  return "Not match Password";
+                }
+                else{
+                  return null;
+                }
+              },
+            ), 
 
 
             const SizedBox(
-              height: 20,
+              height: 25,
             ),
             ElevatedButton(
-                onPressed: (){
-                  if(_formkey.currentState!.validate()){
-                    printLatestValues();
-                    print('submited');
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.redAccent, //background color of button
-                  side: const BorderSide(width:3, color:Colors.grey), //border width and color
-                  elevation: 3, //elevation of button
-                  minimumSize: const Size.fromHeight(50), 
-                  shape: RoundedRectangleBorder( //to set border radius to button
-                      borderRadius: BorderRadius.circular(30)
-                  ),
-                  padding: const EdgeInsets.all(20) //content padding inside button
+              onPressed: (){
+                if(_formkey.currentState!.validate()){
+                  printLatestValues();
+                  print('submited');
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.redAccent, //background color of button
+                side: const BorderSide(width:3, color:Colors.grey), //border width and color
+                elevation: 3, //elevation of button
+                minimumSize: const Size.fromHeight(50), 
+                shape: RoundedRectangleBorder( //to set border radius to button
+                    borderRadius: BorderRadius.circular(30)
                 ),
-                child: 
-                  const Text("Sign up",style: TextStyle(color: Colors.black,),
-                )
+                padding: const EdgeInsets.all(20) //content padding inside button
               ),
+              child: 
+                const Text("Sign up",style: TextStyle(color: Colors.black,),
+              )
+            ),
 
             const SizedBox(
               height: 20,
@@ -220,7 +222,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   text: 'Already have an account? ',
                   style: TextStyle(color: Colors.black,),
                   children: <TextSpan>[
-                    TextSpan(text: 'Login.', style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold)),
+                    TextSpan(text: 'Login.', style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 20)),
                   ],
                 ),
               ),
@@ -228,7 +230,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      )
+    )
     );
   }
 }
