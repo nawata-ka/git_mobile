@@ -1,10 +1,16 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:booking_calendar/booking_calendar.dart';
 import 'package:salonapp/pages/BookingPage.dart';
 
+
 class BookingPageState extends State<BookingPage> {
+  
   final now = DateTime.now();
   late BookingService mockBookingService;
+  // obtain shared preferences
+  // final prefs =  SharedPreferences.getInstance();
 
   @override
   void initState() {
@@ -12,6 +18,8 @@ class BookingPageState extends State<BookingPage> {
     // DateTime.now().startOfDay
     // DateTime.now().endOfDay
     mockBookingService = BookingService(
+        userEmail: "kaori@gmail.com",
+        userPhoneNumber: "415-2222-2222",
         serviceName: 'Mock Service',
         serviceDuration: 30,
         bookingEnd: DateTime(now.year, now.month, now.day, 18, 0),
@@ -68,12 +76,23 @@ class BookingPageState extends State<BookingPage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp( 
+        theme: ThemeData(
+          primarySwatch: Colors.brown,
+        ),
         debugShowCheckedModeBanner: false,  
         home: Scaffold(
+          appBar: AppBar(
+            //title: Text(widget.title),
+            leading: IconButton(
+            icon: Icon(Icons.chevron_left, color: Colors.white),
+            onPressed: (     
+            ) => Navigator.pop(context)),
+            title: const Text('Appointment'),
+          ),
           body:
           Center(
             child: BookingCalendar(
-              bookingButtonColor: Colors.amber,
+              bookingButtonColor: Colors.brown,
               bookedSlotColor: Colors.grey,
               selectedSlotColor: Colors.amber,
               availableSlotColor: Color.fromARGB(255, 245, 219, 179),
@@ -83,13 +102,14 @@ class BookingPageState extends State<BookingPage> {
               uploadBooking: uploadBookingMock,
               //pauseSlots: generatePauseSlots(),
               //pauseSlotText: 'LUNCH',
-              hideBreakTime: false,
+              hideBreakTime: true,
               loadingWidget: const Text('Fetching data...'),
               uploadingWidget: const CircularProgressIndicator(),
               locale: 'en_US',
               startingDayOfWeek: StartingDayOfWeek.monday,
               wholeDayIsBookedWidget:
                   const Text('Sorry, for this day everything is booked'),
+              
               //disabledDates: [DateTime(2023, 1, 20)],
               //disabledDays: [6, 7],
             ),
@@ -97,3 +117,4 @@ class BookingPageState extends State<BookingPage> {
         ));
   }
 }
+
