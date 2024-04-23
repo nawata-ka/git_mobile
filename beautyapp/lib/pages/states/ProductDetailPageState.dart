@@ -9,14 +9,16 @@ import 'package:flutter/widgets.dart';
 class ProductDetailPageState extends State<ProductDetailPage> {
 
 
+
   @override
   Widget build(BuildContext context) {
 
-    //final args = ModalRoute.of(context)!.settings.arguments as arguments;
+    //final args = ModalRoute.of(context)!.settings.arguments as Arguments;
+    // print(args);
 
     return Scaffold(
         appBar: AppBar(
-          title: Text("Test"),
+          title: Text(widget.title),
         ),
         
         body: Column(

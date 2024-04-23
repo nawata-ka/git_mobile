@@ -1,8 +1,10 @@
 
+import 'package:flutter/material.dart';
 
-class arguments {
-    final String product_id;
+class Arguments {
+    final String title;
+    final String message;
     //final String text_message;
 
-  arguments(this.product_id);
+  Arguments(this.title,this.message);
 }

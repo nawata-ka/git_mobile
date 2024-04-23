@@ -1,3 +1,4 @@
+import 'package:beautyapp/arguments.dart';
 import 'package:beautyapp/pages/ProductDetailPage.dart';
 import 'package:flutter/material.dart';
 import 'package:beautyapp/pages/LikePage.dart';
@@ -72,12 +73,37 @@ class LikePageState extends State<LikePage> {
                           onTap: () {
                             //Navigator.pushNamed(context, "/ProductDetailPage");
 
+                  // Navigator.of(context, rootNavigator: true).pushNamed("/ProductDetailPage",
+                  //                      arguments:(
+                  //                    'product_id','bbb',
+                  //                  ), 
+                  //                 );
+
+                            // Navigator.pushNamed(
+                            //       context,
+                            //       ProductDetailPage.routeName,
+                            //       arguments: Arguments(
+                            //         'productname',
+                            //         'bbbb',
+                            //       ),
+                            //     );
+
                             Navigator.push(
                                 context,
                                 new MaterialPageRoute(
-                                  builder: (context) => new ProductDetailPage(),
+                                  builder: (context) => new ProductDetailPage(title: "aaaa", message: "bbbb",),
                                 ),
                               );
+
+                            // Navigator.pushNamed(
+                            //   context,
+                            //   ProductDetailPage.routeName,
+                            //   arguments: Arguments(
+                            //     'Product_id',
+                            //     'test',
+                            //   ),
+                            // );
+
                           },
                           child: Row(
                             children: <Widget>[
