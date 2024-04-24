@@ -41,8 +41,10 @@ class LoginPageState extends State<LoginPage> {
       if (isLoginPage) {
         //login
         authResult = await auth.signInWithEmailAndPassword(
-            email: email, password: password);
+            email: email, password: password);       
         Navigator.pushNamed(context, "/BasePage");
+
+
       } else {
         //signup
         authResult = await auth.createUserWithEmailAndPassword(
@@ -62,7 +64,6 @@ class LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
 
-    
     return Scaffold(
         appBar: AppBar(
           title: isLoginPage ? Text('Login') : Text('Signup'),

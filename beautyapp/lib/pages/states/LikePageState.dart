@@ -1,20 +1,22 @@
-import 'package:beautyapp/arguments.dart';
+
 import 'package:beautyapp/pages/ProductDetailPage.dart';
 import 'package:flutter/material.dart';
 import 'package:beautyapp/pages/LikePage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class LikePageState extends State<LikePage> {
   String uid = "";
-  bool like = false;
+  String uname = "";
+
+  // int likeCount = 0;
+  // bool isLiked = false;
 
   void initState() {
     super.initState();
     getUID();
-    //getlike();
+    //getLike();
   }
 
   getUID() {
@@ -22,78 +24,54 @@ class LikePageState extends State<LikePage> {
     final User? user = auth.currentUser;
     setState(() {
       uid = user!.uid;
+      uname = user.email!;
+      uname = uname.split("@").first;
+      print(uid);
+      print(uname);
     });
   }
-  // getlike() {
-  //   FirebaseAuth auth = FirebaseAuth.instance;
-  //   final User? user = auth.currentUser;
+
+  // getLike() {
   //   setState(() {
-  //     like = user!.uid;
+  //     this.isLiked = isLiked;
+  //     likeCount += this.isLiked ? 1 : -1;
+
   //   });
+  //     print(isLiked);
+  //     print(likeCount);
   // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: StreamBuilder(
+      body: 
+      StreamBuilder(
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Container(child: CircularProgressIndicator());
+            return const CircularProgressIndicator();
           } else {
             final docs = snapshot.data!.docs;
-
             return ListView.builder(
                 itemBuilder: ((context, index) {
-// Card(
-//             child: ListTile(
-//               leading: FlutterLogo(size: 56.0),
-//               title: Text('Two-line ListTile'),
-//               subtitle: Text('Here is a second line'),
-//               trailing: Icon(Icons.more_vert),
-//             ),
-//           ),
-
-                  //   return Card(
-                  //     child: ListTile(
-                  //       leading: const FlutterLogo(size: 70.0),//Todo get image from storage
-                  //       title: Text(docs[index]["name"]),
-                  //       subtitle: Text(docs[index]["brand"]),
-
-                  //       trailing: IconButton(
-                  //         icon: Icon(Icons.delete),
-                  //         onPressed:(){
-                  //           Navigator.pushNamed(context, "/ProductDetailPage");
-                  //         })
-                  //     ),
-                  //   );
-                  // }),
-
+                
                   return Card(
                       child: InkWell(
                           onTap: () {
-                            //Navigator.pushNamed(context, "/ProductDetailPage");
-
-                  // Navigator.of(context, rootNavigator: true).pushNamed("/ProductDetailPage",
-                  //                      arguments:(
-                  //                    'product_id','bbb',
-                  //                  ), 
-                  //                 );
-
-                            // Navigator.pushNamed(
-                            //       context,
-                            //       ProductDetailPage.routeName,
-                            //       arguments: Arguments(
-                            //         'productname',
-                            //         'bbbb',
-                            //       ),
-                            //     );
-
                             Navigator.push(
-                                context,
-                                new MaterialPageRoute(
-                                  builder: (context) => new ProductDetailPage(title: "aaaa", message: "bbbb",),
+                              context,
+                              new MaterialPageRoute(
+                                builder: (context) => new ProductDetailPage(
+                                  name: docs[index]["name"],
+                                  brand: docs[index]["brand"],
+                                  price: docs[index]["price"],
+                                  description: docs[index]["description"],
+                                  like:docs[index]["like"],
+                                  user_id: uid,
+                                  user_name: uname,
+                                  id: docs[index]["id"],
                                 ),
-                              );
+                              ),
+                            );
 
                             // Navigator.pushNamed(
                             //   context,
@@ -103,36 +81,45 @@ class LikePageState extends State<LikePage> {
                             //     'test',
                             //   ),
                             // );
-
                           },
                           child: Row(
+                            //mainAxisAlignment: MainAxisAlignment.start,
                             children: <Widget>[
-                              // Expanded(
-                              //   child:
                               Image.asset(
                                 'images/lip_gloss.jpg',
-                                height: 180,
-                                width: 180,
+                                height: 150,
+                                width: 150,
                                 //fit: BoxFit.cover,
                               ),
-                              //),
-                              // Expanded(
-                              //   child:
                               Column(
+                                //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
                                     docs[index]["name"],
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16),
                                   ),
                                   Text(docs[index]["brand"]),
-                                  RatingBarIndicator(
-                                    rating: 4.1,
-                                    itemCount: 5,
-                                    itemSize: 20.0,
-                                    physics: BouncingScrollPhysics(),
-                                    itemBuilder: (context, _) => Icon(
-                                      Icons.star,
-                                      color: Colors.pink,
-                                    ),
+                                  Row(
+                                    children: [
+                                      RatingBarIndicator(
+                                        
+                                        rating: 4.1,
+                                        itemCount: 5,
+                                        itemSize: 20.0,
+                                        physics: BouncingScrollPhysics(),
+                                        itemBuilder: (context, _) => Icon(
+                                          Icons.star,
+                                          color: Colors.pink,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: Text("4"),
+                                      ),
+                                    ],
                                   ),
                                   //Text('Line2',
                                   //    textAlign: TextAlign.left),
@@ -145,7 +132,11 @@ class LikePageState extends State<LikePage> {
                 itemCount: docs.length);
           }
         },
-        stream: FirebaseFirestore.instance.collection("products").snapshots(),
+        stream: FirebaseFirestore.instance.collection("products")
+        .where("like",isEqualTo: true)
+        .snapshots(),
+        //stream: FirebaseFirestore.instance.collection("products")
+
       ),
     );
   }

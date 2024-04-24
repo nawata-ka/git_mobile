@@ -1,4 +1,4 @@
-import 'package:beautyapp/arguments.dart';
+import 'package:beautyapp/Products.dart';
 import 'package:beautyapp/pages/LikePage.dart';
 import 'package:beautyapp/pages/ProductDetailPage.dart';
 import 'package:flutter/material.dart';
@@ -25,8 +25,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Beauty salon app',
-      home: const BasePage(), 
-      //home: const LoginPage(), 
+      //home: const BasePage(), 
+      home: const LoginPage(), 
       //initialRoute: '/',
       routes: {
         '/LoginPage': (context) => const LoginPage(),
